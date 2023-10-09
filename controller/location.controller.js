@@ -31,20 +31,20 @@ class LocationController {
         const limit = parseInt(req.query.limit) || 10;
 
         try {
-            const totalLocation = await locationModel.countDocuments();
+            const totalLocation = await locationsModel.countDocuments();
             const totalPages = Math.ceil(totalLocation / limit);
-            const locations = await locationModel
+            const locations = await locationsModel
                 .find()
                 .skip((page - 1) * limit)
                 .limit(limit);
             if (!locations) {
                 res.status(404);
-                throw new Error('No Trainer exist');
+                throw new Error('No LOCATION exist');
             }
             res.status(200).json({ locations, page, totalLocation, totalPages });
         } catch (error) {
             res.status(400);
-            throw new Error('Error GETing Trainer');
+            throw new Error('Error GETing LOCATION');
         }
     }
     // 2. PUT DETAILS LOCATION
@@ -52,13 +52,13 @@ class LocationController {
         try {
             const id = req.params._id;
             const updatedData = req.body;
-            const locations = await locationModel.findById({ _id: id });
+            const locations = await locationsModel.findById({ _id: id });
             if (!locations) {
                 res.status(404);
                 throw new Error('No trainers exist');
             }
             // Cập nhật thông tin người dùng
-            await locationModel.findByIdAndUpdate(id, updatedData);
+            await locationsModel.findByIdAndUpdate(id, updatedData);
             res.status(200).json({ message: 'Information edited successfully' });
         } catch (error) {
             res.status(400);
@@ -70,13 +70,13 @@ class LocationController {
     async deleteLocation(req, res) {
         const id = req.params._id;
         try {
-            const locations = await locationModel.findById({ _id: id });
+            const locations = await locationsModel.findById({ _id: id });
             if (!locations) {
                 res.status(404);
                 throw new Error('No users exist');
             }
             // Xóa người dùng
-            await locationModel.findByIdAndRemove({ _id: id });
+            await locationsModel.findByIdAndRemove({ _id: id });
             res.status(200).json({ message: 'Successful deleted location' });
         } catch (error) {
             res.status(400);
@@ -88,7 +88,7 @@ class LocationController {
     async showDetailLocation(req, res) {
         const id = req.params._id;
         try {
-            const location = await locationModel.findById({ _id: id });
+            const location = await locationsModel.findById({ _id: id });
             if (!location) {
                 res.status(404);
                 throw new Error('No Location exist');
