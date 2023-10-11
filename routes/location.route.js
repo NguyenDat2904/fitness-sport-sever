@@ -1,12 +1,14 @@
 var express = require('express');
 const locationController = require('../controller/location.controller');
+const accessToken = require('../middleware/refreshAccessToken.middleware');
+const checkAndUpdateRefreshToken = require('../middleware/checkUpdateRefreshToken.middleware');
 const author = require('../middleware/author.middleware');
 
 var router = express.Router();
 
 // III. Location
 // 0. CREATE /location/post
-router.post('/post', author, locationController.postLocation);
+router.post('/post', checkAndUpdateRefreshToken, accessToken, author, locationController.postLocation);
 
 // 1. GET /location/
 router.get('/', locationController.showAllLocation);

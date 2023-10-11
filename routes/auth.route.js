@@ -19,6 +19,9 @@ router.post('/security', AuthController.security);
 // 5. PATCH /auth/forgot
 router.patch('/forgot', AuthController.forgot);
 
+// 7. DELETE /auth/logout/:_id
+router.patch('/logout/:_id', AuthController.logout);
+
 // 6. PATCH /auth/:_id/change-password
 router.patch('/:_id/change-password', AuthController.changePassword);
 

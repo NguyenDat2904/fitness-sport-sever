@@ -131,9 +131,9 @@ class PaymentController {
                 total = await convertVndToUsd(1499999);
             } else if (user.rank === 'Gold' && rank === 'Platinum') {
                 total = await convertVndToUsd(400000);
-            } else if (user.rank === 'Platinum' && rank === 'Platinum') {
+            } else if (user.rank === 'Platinum' && rank === 'Diamond') {
                 total = await convertVndToUsd(600000);
-            } else if (user.rank === 'Gold' && rank === 'Platinum') {
+            } else if (user.rank === 'Gold' && rank === 'Diamond') {
                 total = await convertVndToUsd(1000000);
             } else {
                 return res.status(400).json({ msg: 'Rank không hợp lệ' });

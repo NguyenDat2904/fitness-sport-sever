@@ -4,12 +4,22 @@ class UserController {
     async showAllUser(req, res) {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
+        const { rank, course, phone } = req.query;
+        const rankFiler = rank ? { rank: rank } : {};
+        const courseFiler = course ? { 'courseID.name': course } : {};
+        const phoneFiler = phone ? { phone: { $regex: phone.toString(), $options: 'i' } } : {};
 
         try {
-            const totalUsers = await userModel.countDocuments();
+            const totalUsers = await userModel.countDocuments({
+                role: 'normal',
+                ...rankFiler,
+                ...courseFiler,
+                ...phoneFiler,
+            });
             const totalPages = Math.ceil(totalUsers / limit);
+
             const users = await userModel
-                .find({ role: 'normal' })
+                .find({ role: 'normal', ...rankFiler, ...courseFiler, ...phoneFiler })
                 .populate('courseID benefitID')
                 .skip((page - 1) * limit)
                 .limit(limit)

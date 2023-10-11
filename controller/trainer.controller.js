@@ -12,6 +12,7 @@ class TrainerController {
             const totalPages = Math.ceil(totalTrainer / limit);
             const usersTrainer = await trainerModel
                 .find()
+                .populate('courses')
                 .skip((page - 1) * limit)
                 .limit(limit)
                 .select('-password');
@@ -30,7 +31,7 @@ class TrainerController {
     async showDetailTrainer(req, res) {
         const id = req.params._id;
         try {
-            const trainers = await trainerModel.findById({ _id: id }).select('-password');
+            const trainers = await trainerModel.findById({ _id: id }).populate('courses').select('-password');
             if (!trainers) {
                 res.status(404);
                 throw new Error('No trainers exist');

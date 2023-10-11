@@ -28,11 +28,15 @@ class AdminController {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
 
+        const { name } = req.query;
+
+        const nameQuery = name ? { name: { $regex: name, $options: 'i' } } : {};
+
         try {
-            const totalCourse = await coursesModel.countDocuments();
+            const totalCourse = await coursesModel.countDocuments(nameQuery);
             const totalPages = Math.ceil(totalCourse / limit);
             const courses = await coursesModel
-                .find()
+                .find(nameQuery)
                 .skip((page - 1) * limit)
                 .limit(limit);
             if (!courses) {
@@ -119,11 +123,14 @@ class AdminController {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
 
+        const rank = req.query.rank;
+        const rankQuery = rank ? { rank } : {};
+
         try {
-            const totalBenefit = await benefitModel.countDocuments();
+            const totalBenefit = await benefitModel.countDocuments(rankQuery);
             const totalPages = Math.ceil(totalCourse / limit);
             const benefits = await benefitModel
-                .find()
+                .find(rankQuery)
                 .skip((page - 1) * limit)
                 .limit(limit);
             if (!benefits) {

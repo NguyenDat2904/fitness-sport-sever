@@ -13,6 +13,7 @@ const User = new Schema(
         benefitID: [{ type: mongoose.Schema.Types.ObjectId, ref: 'benefits' }],
         role: { type: String },
         status: { type: Boolean },
+        refreshToken: { type: String },
     },
     { timestamps: true },
     { collection: 'users' },

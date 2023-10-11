@@ -7,6 +7,7 @@ const Trainer = new Schema(
         password: { type: String, required: true },
         phone: { type: String },
         role: { type: String },
+        refreshToken: { type: String },
     },
     { timestamps: true },
     { collection: 'trainers' },

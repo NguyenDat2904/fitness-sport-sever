@@ -5,8 +5,11 @@ const locationsRoute = require('./location.route');
 const orderRoute = require('./order.route');
 const trainerRoute = require('./trainer.route');
 const paymentRoute = require('./payment.route');
+const homeRoute = require('./home.route');
 
 function router(app) {
+    // 0.
+    app.use('/', homeRoute);
     // Route AUTH
     // 1. /auth
     app.use('/auth', authRoute);

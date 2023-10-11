@@ -30,11 +30,15 @@ class LocationController {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
 
+        const { district, ward } = req.query;
+        const districtQuery = district ? { district } : {};
+        const wardQuery = ward ? { ward } : {};
+
         try {
-            const totalLocation = await locationsModel.countDocuments();
+            const totalLocation = await locationsModel.countDocuments({ ...wardQuery, ...districtQuery });
             const totalPages = Math.ceil(totalLocation / limit);
             const locations = await locationsModel
-                .find()
+                .find({ ...wardQuery, ...districtQuery })
                 .skip((page - 1) * limit)
                 .limit(limit);
             if (!locations) {

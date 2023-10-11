@@ -16,9 +16,13 @@ class AuthController {
         try {
             const { email, name } = req.body;
             const verificationCode = randomCode(6);
+            const emailUser = await checkEmailExists(email);
+            if (emailUser) {
+                return res.status(400).json({ msg: 'Email already exists' });
+            }
             // Gửi email xác thực
             const mailOptions = {
-                from: process.env.USER_EMAIL,
+                from: `FITNESS TEAM <${process.env.USER_EMAIL}>`,
                 to: `${email}`,
                 subject: 'Fitness Sport',
                 html: `
@@ -140,20 +144,21 @@ class AuthController {
                     email,
                     password: hashPassword,
                     role,
+                    refreshToken: '',
+                    rank: '',
                 });
                 await newUser.save();
-                const token = generateToken(newUser);
-                return res.status(200).json({ name, email, role, token });
+                return res.status(200).json({ name, email, role });
             } else if (role === 'trainer') {
                 const newTrainer = new trainersModel({
                     name,
                     email,
                     password: hashPassword,
+                    refreshToken: '',
                     role,
                 });
                 await newTrainer.save();
-                const token = generateToken(newTrainer);
-                return res.status(200).json({ name, email, role, token });
+                return res.status(200).json({ name, email, role });
             }
         } catch (error) {
             console.error('Lỗi đăng ký tài khoản:', error);
@@ -182,10 +187,13 @@ class AuthController {
             }
 
             // Create a message JWT token
-            const token = generateToken(userEmail);
+            const refreshToken = generateToken(userEmail, '720h');
+            userEmail.refreshToken = refreshToken;
+            await userEmail.save();
+            const accessToken = generateToken(userEmail, '24h');
 
             // Res create success token
-            return res.json({ _id: userEmail._id, name, email, role: userEmail.role, token });
+            return res.json({ _id: userEmail._id, name, email, role: userEmail.role, accessToken, refreshToken });
         } catch (error) {
             console.error('Error Login:', error);
             res.status(400);
@@ -264,6 +272,21 @@ class AuthController {
             console.error('Lỗi thay mật khẩu:', error);
             res.status(400);
             throw new Error({ error: 'Lỗi thay mật khẩu:' });
+        }
+    }
+
+    async logout(req, res) {
+        try {
+            const id = req.params._id;
+            const user = await userModel.findById(id);
+            if (!user) {
+                return res.status(404).json({ error: 'User not found' });
+            }
+            user.refreshToken = '';
+            user.save();
+            return res.status(200).json({ msg: 'Successfully logged out' });
+        } catch (error) {
+            return res.status(400).json({ error: 'Fail logged out' });
         }
     }
 }
