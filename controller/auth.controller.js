@@ -164,7 +164,7 @@ class AuthController {
         } catch (error) {
             console.error('Lỗi đăng ký tài khoản:', error);
             res.status(400);
-            throw new Error({ error: 'Lỗi đăng ký tài khoản:' });
+            throw new Error('Lỗi đăng ký tài khoản:', error);
         }
     }
 
