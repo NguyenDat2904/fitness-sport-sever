@@ -123,7 +123,7 @@ class AuthController {
                 throw new Error({ error: 'Mã xác thực không hợp lệ' });
             }
             // Validate Form
-            // const { error } = await validateUser(req.body);
+            // const { error } = await validateUser(name, email, password);
             // if (error) {
             //     res.status(400);
             //     throw new Error({ error: error.details[0].message });

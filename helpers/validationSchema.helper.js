@@ -1,22 +1,16 @@
 const Joi = require('joi');
 
-function validateUser(userData) {
+function validateUser(name, email, password) {
     const userSchema = Joi.object({
-        name: Joi.string()
-            .regex(/^[\p{L} ]+$/u)
-            .min(3)
-            .max(50)
-            .required(),
-        email: Joi.string()
-            .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'vn'] } })
-            .required(),
+        name: Joi.string().min(3).max(50).required(),
+        email: Joi.string().required(),
         password: Joi.string().min(6).max(20).required(),
-        phone: Joi.string().pattern(new RegExp('^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$')),
+        phone: Joi.string(),
         address: Joi.string(),
         age: Joi.number().integer().min(3).max(100),
     });
 
-    return userSchema.validate(userData);
+    return userSchema.validate(name, email, password);
 }
 
 module.exports = validateUser;
