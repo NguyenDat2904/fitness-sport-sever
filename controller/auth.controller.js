@@ -133,7 +133,7 @@ class AuthController {
             const emailExists = await checkEmailExists(email);
             if (!!emailExists) {
                 res.status(400);
-                throw new Error({ error: 'Email đã tồn tại.' });
+                throw new Error(error);
             }
 
             const salt = bcrypt.genSaltSync(10);
