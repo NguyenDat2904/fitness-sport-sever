@@ -160,6 +160,7 @@ class AuthController {
                 await newTrainer.save();
                 return res.status(200).json({ name, email, role });
             }
+            return res.status(400).json({ error: 'Đăng ký không thành công' });
         } catch (error) {
             console.error('Lỗi đăng ký tài khoản:', error);
             res.status(400);
