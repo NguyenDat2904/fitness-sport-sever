@@ -56,7 +56,7 @@ class AuthController {
                 }
             });
         } catch (error) {
-            throw new Error({ error: 'Gửi xác thực Email không thành công' });
+            throw new Error(error);
         }
     }
 
@@ -109,7 +109,7 @@ class AuthController {
                 }
             });
         } catch (error) {
-            throw new Error({ error: 'Gửi xác thực Email không thành công' });
+            throw new Error(error);
         }
     }
 
@@ -162,9 +162,9 @@ class AuthController {
             }
             return res.status(400).json({ error: 'Đăng ký không thành công' });
         } catch (error) {
-            console.error('Lỗi đăng ký tài khoản:', error);
+            console.error(error);
             res.status(400);
-            throw new Error('Lỗi đăng ký tài khoản:', error);
+            throw new Error(error);
         }
     }
 
@@ -198,7 +198,7 @@ class AuthController {
         } catch (error) {
             console.error('Error Login:', error);
             res.status(400);
-            throw new Error({ error: 'Error Login:' });
+            throw new Error(error);
         }
     }
 
@@ -209,7 +209,7 @@ class AuthController {
             if (storedCode && storedCode !== code) {
                 // Mã xác thực không hợp lệ
                 res.status(400);
-                throw new Error({ error: 'Mã xác thực không hợp lệ' });
+                throw new Error(error);
             }
             // Validate Form
             // const { error } = await validateUser(req.body);
@@ -236,7 +236,7 @@ class AuthController {
         } catch (error) {
             console.error('Lỗi thay mật khẩu:', error);
             res.status(400);
-            throw new Error({ error: 'Lỗi thay mật khẩu:' });
+            throw new Error(error);
         }
     }
 
@@ -272,7 +272,7 @@ class AuthController {
         } catch (error) {
             console.error('Lỗi thay mật khẩu:', error);
             res.status(400);
-            throw new Error({ error: 'Lỗi thay mật khẩu:' });
+            throw new Error(error);
         }
     }
 
@@ -287,7 +287,7 @@ class AuthController {
             user.save();
             return res.status(200).json({ msg: 'Successfully logged out' });
         } catch (error) {
-            return res.status(400).json({ error: 'Fail logged out' });
+            return res.status(400).json(error);
         }
     }
 }
