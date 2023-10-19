@@ -120,15 +120,14 @@ class AdminController {
     }
     // 1. GET Benefits
     async showAllBenefits(req, res) {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 10;
-
-        const rank = req.query.rank;
-        const rankQuery = rank ? { rank } : {};
-
         try {
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 10;
+
+            const rank = req.query.rank;
+            const rankQuery = rank ? { rank } : {};
             const totalBenefit = await benefitModel.countDocuments(rankQuery);
-            const totalPages = Math.ceil(totalCourse / limit);
+            const totalPages = Math.ceil(totalBenefit / limit);
             const benefits = await benefitModel
                 .find(rankQuery)
                 .skip((page - 1) * limit)
@@ -140,7 +139,7 @@ class AdminController {
             res.status(200).json({ benefits, page, totalBenefit, totalPages });
         } catch (error) {
             res.status(400);
-            throw new Error('Error GETing benefits');
+            throw new Error(error);
         }
     }
     // 2. PUT Benefit
