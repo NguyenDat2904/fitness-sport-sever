@@ -120,7 +120,7 @@ class AuthController {
             if (storedCode && storedCode !== code) {
                 // Mã xác thực không hợp lệ
                 res.status(400);
-                throw new Error({ error: 'Mã xác thực không hợp lệ' });
+                throw new Error(error);
             }
             // Validate Form
             // const { error } = await validateUser(name, email, password);
@@ -177,14 +177,14 @@ class AuthController {
 
             if (!userEmail) {
                 res.status(400);
-                throw new Error({ error: 'Email không tồn tại.' });
+                throw new Error(error);
             }
 
             // Check Password
             const isPasswordValid = await bcrypt.compare(password, userEmail.password);
             if (!isPasswordValid) {
                 res.status(401);
-                throw new Error({ error: 'Mật khẩu không chính xác.' });
+                throw new Error(error);
             }
 
             // Create a message JWT token

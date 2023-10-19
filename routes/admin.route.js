@@ -32,7 +32,7 @@ router.get('/course/:_id', authorMiddleware, AdminController.showDetailCourse);
 router.post('/benefit/post', checkAndUpdateRefreshToken, accessToken, authorMiddleware, AdminController.postBenefit);
 
 // 1. GET /admin/benefit/
-router.get('/benefit', accessToken, AdminController.showAllBenefits);
+router.get('/benefit', AdminController.showAllBenefits);
 
 /* 2. PUT /admin/benefit/put/:_id */
 router.put('/benefit/put/:_id', accessToken, authorMiddleware, AdminController.putBenefit);
