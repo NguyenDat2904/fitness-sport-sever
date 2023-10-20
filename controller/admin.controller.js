@@ -20,7 +20,7 @@ class AdminController {
             res.json('POST Course success');
         } catch (error) {
             res.status(400);
-            throw new Error('Error POST Course');
+            throw new Error(error);
         }
     }
     // 1. GET COURSES
@@ -46,7 +46,7 @@ class AdminController {
             res.status(200).json({ courses, page, totalCourse, totalPages });
         } catch (error) {
             res.status(400);
-            throw new Error('Error GETing Courses');
+            throw new Error(error);
         }
     }
 
@@ -65,7 +65,7 @@ class AdminController {
             res.status(200).json({ message: 'Information edited successfully' });
         } catch (error) {
             res.status(400);
-            throw new Error('Error editing Course information');
+            throw new Error(error);
         }
     }
 
@@ -83,7 +83,7 @@ class AdminController {
             res.status(200).json({ message: 'Successful deleted course' });
         } catch (error) {
             res.status(400);
-            throw new Error('Error DELETE course');
+            throw new Error(error);
         }
     }
 
@@ -99,7 +99,7 @@ class AdminController {
             res.status(200).json(course);
         } catch (error) {
             res.status(400);
-            throw new Error('Error GETTing Detail course');
+            throw new Error(error);
         }
     }
 
@@ -115,7 +115,7 @@ class AdminController {
             res.json('POST Course success');
         } catch (error) {
             res.status(400);
-            throw new Error('Error POST Course');
+            throw new Error(error);
         }
     }
     // 1. GET Benefits
@@ -157,7 +157,7 @@ class AdminController {
             res.status(200).json({ message: 'Information edited successfully' });
         } catch (error) {
             res.status(400);
-            throw new Error('Error editing benefit information');
+            throw new Error(error);
         }
     }
 
@@ -175,7 +175,7 @@ class AdminController {
             res.status(200).json({ message: 'Successful deleted benefit' });
         } catch (error) {
             res.status(400);
-            throw new Error('Error DELETE benefit');
+            throw new Error(error);
         }
     }
 
@@ -191,7 +191,7 @@ class AdminController {
             res.status(200).json(benefit);
         } catch (error) {
             res.status(400);
-            throw new Error('Error GETTing benefit course');
+            throw new Error(error);
         }
     }
 }

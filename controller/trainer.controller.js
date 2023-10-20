@@ -23,7 +23,7 @@ class TrainerController {
             res.status(200).json({ usersTrainer, page, totalTrainer, totalPages });
         } catch (error) {
             res.status(400);
-            throw new Error('Error GETing Trainer');
+            throw new Error(error);
         }
     }
 
@@ -39,7 +39,7 @@ class TrainerController {
             res.status(200).json(trainers);
         } catch (error) {
             res.status(400);
-            throw new Error('Error GETTing Detail trainer');
+            throw new Error(error);
         }
     }
 
@@ -58,7 +58,7 @@ class TrainerController {
             res.status(200).json({ message: 'Information edited successfully' });
         } catch (error) {
             res.status(400);
-            throw new Error('Error editing TRAINER information');
+            throw new Error(error);
         }
     }
 
@@ -76,7 +76,7 @@ class TrainerController {
             res.status(200).json({ message: 'Successful deleted trainer' });
         } catch (error) {
             res.status(400);
-            throw new Error('Error DELETE trainer');
+            throw new Error(error);
         }
     }
 }

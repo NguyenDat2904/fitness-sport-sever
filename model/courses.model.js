@@ -10,6 +10,7 @@ const Course = new Schema(
         locationID: { type: mongoose.Schema.Types.ObjectId, ref: 'locations' },
         trainerID: { type: mongoose.Schema.Types.ObjectId, ref: 'trainers' },
         schedule: [{ time: { type: String }, day: { type: String } }],
+        type: { type: String },
     },
     { timestamps: true },
     { collection: 'courses' },

@@ -15,7 +15,7 @@ class OrderController {
             res.status(200).json({ msg: 'Post Order Success' });
         } catch (error) {
             res.status(400);
-            throw new Error('Post Order Error');
+            throw new Error(error);
         }
     }
 
@@ -33,12 +33,12 @@ class OrderController {
                 .populate('userID courseID', '-password')
                 .limit(limit);
             if (!orders) {
-                throw new Error('Orders not found');
+                throw new Error(error);
             }
             res.status(200).json({ orders, totalPages, page, totalOrder });
         } catch (error) {
             res.status(400);
-            throw new Error('Order does not exist');
+            throw new Error(error);
         }
     }
 
@@ -50,7 +50,7 @@ class OrderController {
 
             if (!order) {
                 res.status(404);
-                throw new Error('Order not found');
+                throw new Error(error);
             }
 
             // Cập nhật thông tin đơn hàng
@@ -58,7 +58,7 @@ class OrderController {
             res.status(200).json({ message: 'Information edited successfully' });
         } catch (error) {
             res.status(400);
-            throw new Error('Error editing Order information');
+            throw new Error(error);
         }
     }
 
@@ -74,7 +74,7 @@ class OrderController {
             response.status(200).json('Delete Order Success');
         } catch (error) {
             res.status(400);
-            throw new Error('Delete Order Error');
+            throw new Error(error);
         }
     }
 
@@ -85,12 +85,12 @@ class OrderController {
             const order = await orderModel.findById({ _id: id }).populate('userID courseID', '-password');
             if (!order) {
                 res.status(400);
-                throw new Error('Order not found');
+                throw new Error(error);
             }
             res.status(200).json(order);
         } catch (error) {
             res.status(400);
-            throw new Error('Order does not exist');
+            throw new Error(error);
         }
     }
 }

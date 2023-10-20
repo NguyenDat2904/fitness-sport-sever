@@ -10,7 +10,7 @@ const refreshAccessToken = (req, res, next) => {
 
     if (!token) {
         res.status(400);
-        throw new Error('Token không tồn tại');
+        throw new Error(error);
     }
 
     jwt.verify(token, process.env.SECRET_KEY, async (err, user) => {

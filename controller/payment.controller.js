@@ -87,7 +87,7 @@ class PaymentController {
 
         paypal.payment.execute(paymentId, execute_payment_json, async function (error, payment) {
             if (error) {
-                throw new Error('Error Payment Order');
+                throw new Error(error);
             } else {
                 try {
                     const orderID = payment.transactions[0].item_list.items[0].sku;
@@ -103,7 +103,7 @@ class PaymentController {
                     res.status(200).json({ message: 'Information edited successfully' });
                 } catch (error) {
                     res.status(400);
-                    throw new Error('Error Post Order');
+                    throw new Error(error);
                 }
             }
         });
@@ -179,7 +179,7 @@ class PaymentController {
             paypal.payment.create(create_payment_json, async function (error, payment) {
                 if (error) {
                     res.status(400);
-                    throw new Error('Error payment');
+                    throw new Error(error);
                 } else {
                     for (let i = 0; i < payment.links.length; i++) {
                         if (payment.links[i].rel === 'approval_url') {
@@ -202,7 +202,7 @@ class PaymentController {
 
         paypal.payment.execute(paymentId, execute_payment_json, async function (error, payment) {
             if (error) {
-                throw new Error('Error Payment Order');
+                throw new Error(error);
             } else {
                 try {
                     const userID = payment.transactions[0].item_list.items[0].sku;
@@ -212,7 +212,7 @@ class PaymentController {
 
                     if (!user) {
                         res.status(404);
-                        throw new Error('User not found');
+                        throw new Error(error);
                     }
                     let newBenefits = [];
                     if (rank === 'Gold') {
@@ -240,7 +240,7 @@ class PaymentController {
                     res.status(200).json({ message: 'Information edited successfully' });
                 } catch (error) {
                     res.status(400);
-                    throw new Error('Error Post Order');
+                    throw new Error(error);
                 }
             }
         });

@@ -21,7 +21,7 @@ class LocationController {
             res.status(200).json('POST Location success');
         } catch (error) {
             res.status(400);
-            throw new Error('Error POST LOCATION');
+            throw new Error(error);
         }
     }
 
@@ -48,7 +48,7 @@ class LocationController {
             res.status(200).json({ locations, page, totalLocation, totalPages });
         } catch (error) {
             res.status(400);
-            throw new Error('Error GETing LOCATION');
+            throw new Error(error);
         }
     }
     // 2. PUT DETAILS LOCATION
@@ -66,7 +66,7 @@ class LocationController {
             res.status(200).json({ message: 'Information edited successfully' });
         } catch (error) {
             res.status(400);
-            throw new Error('Error editing Location information');
+            throw new Error(error);
         }
     }
 
@@ -84,7 +84,7 @@ class LocationController {
             res.status(200).json({ message: 'Successful deleted location' });
         } catch (error) {
             res.status(400);
-            throw new Error('Error DELETE location');
+            throw new Error(error);
         }
     }
 
@@ -100,7 +100,7 @@ class LocationController {
             res.status(200).json(location);
         } catch (error) {
             res.status(400);
-            throw new Error('Error GETTing Detail Location');
+            throw new Error(error);
         }
     }
 }
