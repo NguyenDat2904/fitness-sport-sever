@@ -169,34 +169,36 @@ class AuthController {
     }
 
     async login(req, res) {
-        const { name, email, password } = req.body;
+        const { email, password } = req.body;
 
         try {
             // Check Email : return user
             const userEmail = await checkEmailExists(email);
-
             if (!userEmail) {
                 res.status(400);
-                throw new Error(error);
+                throw new Error({ msg: 'Email không tồn tại' });
             }
-
             // Check Password
             const isPasswordValid = await bcrypt.compare(password, userEmail.password);
             if (!isPasswordValid) {
                 res.status(401);
-                throw new Error(error);
+                throw new Error({ password: 'Password sai' });
             }
-
             // Create a message JWT token
             const refreshToken = generateToken(userEmail, '720h');
             userEmail.refreshToken = refreshToken;
             await userEmail.save();
             const accessToken = generateToken(userEmail, '24h');
-
             // Res create success token
-            return res.json({ _id: userEmail._id, name, email, role: userEmail.role, accessToken, refreshToken });
+            return res.json({
+                _id: userEmail._id,
+                name: userEmail.name,
+                email,
+                role: userEmail.role,
+                accessToken,
+                refreshToken,
+            });
         } catch (error) {
-            console.error('Error Login:', error);
             res.status(400);
             throw new Error(error);
         }

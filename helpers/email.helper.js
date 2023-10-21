@@ -4,19 +4,14 @@ const nodemailer = require('nodemailer');
 const userModel = require('../model/users.model');
 const trainerModel = require('../model/trainers.model');
 const checkEmailExists = async (email) => {
-    try {
-        const user = await userModel.findOne({ email });
-        const trainer = await trainerModel.findOne({ email });
-        if (user) {
-            return user; 
-        } else if (trainer) {
-            return trainer;
-        } else {
-            return null;
-        }
-    } catch (error) {
-        console.error('Lỗi kiểm tra email:', error);
-        throw new Error(error);
+    const user = await userModel.findOne({ email });
+    const trainer = await trainerModel.findOne({ email });
+    if (user) {
+        return user;
+    } else if (trainer) {
+        return trainer;
+    } else {
+        return null;
     }
 };
 // Cấu hình Nodemailer với SMTP của Gmail
