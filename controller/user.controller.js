@@ -77,7 +77,7 @@ class UserController {
             const users = await userModel.findById({ _id: id }).populate('courses benefits');
             if (!users) {
                 res.status(404);
-                throw new Error('No users exist');
+                throw new Error(error);
             }
             // Cập nhật thông tin người dùng
             await userModel.findByIdAndUpdate(id, updatedData);

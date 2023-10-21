@@ -10,7 +10,8 @@ const refreshAccessToken = (req, res, next) => {
 
     if (!token) {
         res.status(400);
-        throw new Error(error);
+        res.status(400).json({ error: 'Invalid token' });
+        return;
     }
 
     jwt.verify(token, process.env.SECRET_KEY, async (err, user) => {
