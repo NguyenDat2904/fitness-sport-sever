@@ -74,7 +74,7 @@ class UserController {
         try {
             const id = req.params._id;
             const updatedData = req.body;
-            const users = await userModel.findById({ _id: id }).populate('courses benefits');
+            const users = await userModel.findById({ _id: id });
             if (!users) {
                 res.status(404);
                 throw new Error(error);
