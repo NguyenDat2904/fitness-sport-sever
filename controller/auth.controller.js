@@ -64,10 +64,8 @@ class AuthController {
         try {
             const { email } = req.body;
             const securityCode = randomCode(6);
-
             // Check Email : return user
             const userEmail = await checkEmailExists(email);
-
             if (!userEmail) {
                 res.status(400);
                 throw new Error({ error: 'Email không tồn tại.' });
@@ -109,7 +107,7 @@ class AuthController {
                 }
             });
         } catch (error) {
-            throw new Error(error);
+            return res.status(400).json({ error: 'Email không chính xác' });
         }
     }
 
