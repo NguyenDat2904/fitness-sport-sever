@@ -205,8 +205,7 @@ class AuthController {
             const storedCode = securityCodeCodes[email];
             if (storedCode && storedCode !== code) {
                 // Mã xác thực không hợp lệ
-                res.status(400);
-                throw new Error(error);
+                return res.status(404).json({ error: 'Mã Code không chính xác' });
             }
             // Validate Form
             // const { error } = await validateUser(req.body);
@@ -219,7 +218,7 @@ class AuthController {
             const user = await checkEmailExists(email);
             if (!user) {
                 res.status(400);
-                throw new Error({ error: 'user không đã tồn tại.' });
+                return res.status(404).json({ error: 'User not found' });
             }
 
             const salt = bcrypt.genSaltSync(10);
@@ -231,9 +230,7 @@ class AuthController {
 
             return res.json({ _id: user._id, name: user.name, email, role: user.role });
         } catch (error) {
-            console.error('Lỗi thay mật khẩu:', error);
-            res.status(400);
-            throw new Error(error);
+            return res.status(404).json({ error: 'Mã Code không chính xác' });
         }
     }
 
