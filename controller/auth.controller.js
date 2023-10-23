@@ -117,8 +117,7 @@ class AuthController {
             const storedCode = verificationCodes[email];
             if (storedCode && storedCode !== code) {
                 // Mã xác thực không hợp lệ
-                res.status(400);
-                throw new Error(error);
+                return res.status(400).json({ error: 'Mã code không chính xác' });
             }
             // Validate Form
             // const { error } = await validateUser(name, email, password);
@@ -130,8 +129,7 @@ class AuthController {
             // Check Email
             const emailExists = await checkEmailExists(email);
             if (!!emailExists) {
-                res.status(400);
-                throw new Error(error);
+                return res.status(400).json({ error: 'Email không chính xác' });
             }
 
             const salt = bcrypt.genSaltSync(10);
@@ -162,7 +160,7 @@ class AuthController {
         } catch (error) {
             console.error(error);
             res.status(400);
-            throw new Error(error);
+            return res.status(400).json({ error: 'Mã code không chính xác' });
         }
     }
 
