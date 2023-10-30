@@ -6,6 +6,13 @@ class LocationController {
     async postLocation(req, res) {
         try {
             const { name, city, district, ward, street, desc, img, times_days, phone } = req.body;
+            const files = req.files;
+            let img_location;
+            if (files) {
+                img_location = `${process.env.LOCALHOST}/images_location/${files.img[0].filename}`;
+            } else {
+                img_location = '';
+            }
             const newLocation = new locationsModel({
                 name,
                 city,
@@ -14,7 +21,7 @@ class LocationController {
                 street,
                 phone,
                 desc,
-                img,
+                img: img_location,
                 times_days,
             });
             await newLocation.save();
@@ -56,11 +63,15 @@ class LocationController {
         try {
             const id = req.params._id;
             const updatedData = req.body;
+            const files = req.files;
             const locations = await locationsModel.findById({ _id: id });
             if (!locations) {
-                res.status(404);
-                throw new Error('No trainers exist');
+                return res.status(404).json({ msg: 'No locations found' });
             }
+            if (files) {
+                updatedData.img = `${process.env.LOCALHOST}/images_location/${files.img[0].filename}`;
+            }
+
             // Cập nhật thông tin người dùng
             await locationsModel.findByIdAndUpdate(id, updatedData);
             res.status(200).json({ message: 'Information edited successfully' });

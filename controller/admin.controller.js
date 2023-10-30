@@ -107,9 +107,10 @@ class AdminController {
     // 0. POST BENEFIT
     async postBenefit(req, res) {
         try {
-            const { name } = req.body;
+            const { name, rank } = req.body;
             const newBenefit = new benefitModel({
                 name,
+                rank,
             });
             await newBenefit.save();
             res.json('POST Course success');

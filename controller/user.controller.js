@@ -1,3 +1,4 @@
+require('dotenv').config();
 const userModel = require('../model/users.model');
 
 class UserController {
@@ -73,15 +74,27 @@ class UserController {
     async putUser(req, res) {
         try {
             const id = req.params._id;
+            const files = req.files;
             const updatedData = req.body;
             const users = await userModel.findById({ _id: id });
             if (!users) {
-                res.status(404);
-                throw new Error(error);
+                return res.status(400).json({ msg: 'User not found' });
+            }
+            if (files) {
+                if (files.img) {
+                    updatedData.img = `${process.env.LOCALHOST}/images/${files.img[0].filename}`;
+                }
+                if (files.img_cover) {
+                    updatedData.img_cover = `${process.env.LOCALHOST}/images/${files.img_cover[0].filename}`;
+                }
             }
             // Cập nhật thông tin người dùng
             await userModel.findByIdAndUpdate(id, updatedData);
-            res.status(200).json({ message: 'Information edited successfully' });
+            res.status(200).json({
+                message: 'Information edited successfully',
+                image: updatedData.img,
+                image_cover: updatedData.img_cover,
+            });
         } catch (error) {
             res.status(400);
             throw new Error(error);
