@@ -36,8 +36,8 @@ class PaymentController {
                     payment_method: 'paypal',
                 },
                 redirect_urls: {
-                    return_url: `${process.env.LOCALHOST}/payment/success`,
-                    cancel_url: `${process.env.LOCALHOST}/payment/cancel`,
+                    return_url: `${process.env.LOCALHOST}/payment/paypal/success`,
+                    cancel_url: `${process.env.LOCALHOST}/payment/paypal/cancel`,
                 },
                 transactions: [
                     {
@@ -91,19 +91,15 @@ class PaymentController {
             } else {
                 try {
                     const orderID = payment.transactions[0].item_list.items[0].sku;
-
                     const order = await orderModel.findById({ _id: orderID });
-
                     if (!order) {
-                        res.status(404);
-                        throw new Error('Order not found');
+                        return res.status(400).json({ msg: 'order not found' });
                     }
                     // Cập nhật thông tin đơn hàng
                     await orderModel.findByIdAndUpdate(orderID, { status: 'Đã thanh toán' });
                     res.status(200).json({ message: 'Information edited successfully' });
                 } catch (error) {
-                    res.status(400);
-                    throw new Error(error);
+                    return res.status(400).json({ msg: 'error payment' });
                 }
             }
         });
@@ -152,7 +148,7 @@ class PaymentController {
                 },
                 redirect_urls: {
                     return_url: `${process.env.LOCALHOST}/payment/paypal/benefit-success`,
-                    cancel_url: `${process.env.LOCALHOST}/payment/cancel`,
+                    cancel_url: `${process.env.LOCALHOST}/payment/paypal/cancel`,
                 },
                 transactions: [
                     {

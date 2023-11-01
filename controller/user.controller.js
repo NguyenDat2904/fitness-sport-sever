@@ -75,6 +75,7 @@ class UserController {
         try {
             const id = req.params._id;
             const files = req.files;
+            console.log(files);
             const updatedData = req.body;
             const users = await userModel.findById({ _id: id });
             if (!users) {
