@@ -9,7 +9,7 @@ const benefitsModel = require('../model/benefits.model');
 class PaymentController {
     async pay(req, res) {
         try {
-            const { userID, courseID, totalPrice, timePrice } = req.body;
+            const { userID, courseID, totalPrice, timePrice, city, district, street } = req.body;
             const total = await convertVndToUsd(totalPrice);
 
             const newOrder = new orderModel({
@@ -18,6 +18,9 @@ class PaymentController {
                 totalPrice,
                 status: 'Chưa thanh toán',
                 timePrice,
+                city,
+                street,
+                district,
             });
             const order = await newOrder.save();
             if (!order) {
