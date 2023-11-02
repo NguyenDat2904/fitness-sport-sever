@@ -27,11 +27,8 @@ class AdminController {
     async showAllCourses(req, res) {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
-
         const { name } = req.query;
-
         const nameQuery = name ? { name: { $regex: name, $options: 'i' } } : {};
-
         try {
             const totalCourse = await coursesModel.countDocuments(nameQuery);
             const totalPages = Math.ceil(totalCourse / limit);

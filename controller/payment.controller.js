@@ -97,11 +97,17 @@ class PaymentController {
                     }
                     // Cập nhật thông tin đơn hàng
                     await orderModel.findByIdAndUpdate(orderID, { status: 'Đã thanh toán' });
-                    res.status(200).json({ message: 'Information edited successfully' });
+                    console.log(order);
+                    const user = await usersModel.findById({ _id: order.userID });
+                    if (!user) {
+                        return res.status(400).json({ msg: 'User not found' });
+                    }
+                    user.courseID.push(order.courseID);
+                    await user.save();
+
+                    res.status(200).send(`<script>window.location.href = "http://localhost:3000/profile";</script>`);
                 } catch (error) {
-                    return res
-                        .status(400)
-                        .send(`<script>window.location.href = "http://localhost:3000/profile";</script>`);
+                    return res.status(400).json({ msg: 'Payment fail' });
                 }
             }
         });
