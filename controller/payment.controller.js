@@ -233,7 +233,9 @@ class PaymentController {
                     user.rank = rank;
 
                     await user.save();
-                    res.status(200).json({ message: 'Information edited successfully' });
+                    res.status(200).res.send(
+                        `<script>window.location.href = "https://fitness-sport.onrender.com/profile";</script>`,
+                    );
                 } catch (error) {
                     res.status(400);
                     throw new Error(error);
