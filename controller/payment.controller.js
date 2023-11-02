@@ -99,7 +99,9 @@ class PaymentController {
                     await orderModel.findByIdAndUpdate(orderID, { status: 'Đã thanh toán' });
                     res.status(200).json({ message: 'Information edited successfully' });
                 } catch (error) {
-                    return res.status(400).json({ msg: 'error payment' });
+                    return res
+                        .status(400)
+                        .send(`<script>window.location.href = "http://localhost:3000/profile";</script>`);
                 }
             }
         });
@@ -233,9 +235,7 @@ class PaymentController {
                     user.rank = rank;
 
                     await user.save();
-                    res.status(200).send(
-                        `<script>window.location.href = "https://fitness-sport.onrender.com/profile";</script>`,
-                    );
+                    res.status(200).send(`<script>window.location.href = "http://localhost:3000/profile";</script>`);
                 } catch (error) {
                     res.status(400);
                     throw new Error(error);
