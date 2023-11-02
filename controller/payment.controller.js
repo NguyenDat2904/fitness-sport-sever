@@ -233,7 +233,7 @@ class PaymentController {
                     user.rank = rank;
 
                     await user.save();
-                    res.status(200).res.send(
+                    res.status(200).send(
                         `<script>window.location.href = "https://fitness-sport.onrender.com/profile";</script>`,
                     );
                 } catch (error) {
