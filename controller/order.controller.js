@@ -2,7 +2,7 @@ const orderModel = require('../model/orders.model');
 class OrderController {
     async postOrder(req, res) {
         try {
-            const { userID, courseID, status, totalPrice, timePrice } = req.body;
+            const { userID, courseID, status, totalPrice, timePrice, street, city, district } = req.body;
 
             const order = new orderModel({
                 userID,
@@ -10,6 +10,9 @@ class OrderController {
                 status,
                 totalPrice,
                 timePrice,
+                street,
+                city,
+                district,
             });
             await order.save();
             res.status(200).json({ msg: 'Post Order Success' });

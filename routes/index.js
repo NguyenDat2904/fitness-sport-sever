@@ -6,6 +6,7 @@ const orderRoute = require('./order.route');
 const trainerRoute = require('./trainer.route');
 const paymentRoute = require('./payment.route');
 const homeRoute = require('./home.route');
+const blogRoute = require('./blog.route');
 
 function router(app) {
     // 0.
@@ -32,6 +33,8 @@ function router(app) {
 
     // Route Payment
     app.use('/payment', paymentRoute);
+
+    app.use('/blog', blogRoute);
 }
 
 module.exports = router;
