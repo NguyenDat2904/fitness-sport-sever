@@ -108,7 +108,9 @@ class PaymentController {
                     user.courseID.push(order.courseID);
                     await user.save();
 
-                    res.status(200).send(`<script>window.location.href = "http://localhost:3000/profile";</script>`);
+                    res.status(200).send(
+                        `<script>window.location.href = "https://beauty-body.vercel.app/profile";</script>`,
+                    );
                 } catch (error) {
                     return res.status(400).json({ msg: 'Payment fail' });
                 }
@@ -244,7 +246,9 @@ class PaymentController {
                     user.rank = rank;
 
                     await user.save();
-                    res.status(200).send(`<script>window.location.href = "http://localhost:3000/profile";</script>`);
+                    res.status(200).send(
+                        `<script>window.location.href = "https://beauty-body.vercel.app/profile";</script>`,
+                    );
                 } catch (error) {
                     res.status(400);
                     throw new Error(error);
